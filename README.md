@@ -1,2 +1,5 @@
-# test-kata-calculator
-Kata Academy test job (Java Calcuclator)
+# Java Calculator
+
+Performs the simplest operations with Arabic and Roman numerals.
+
+Test Assignment for Kata Academy as a Java Programmer
