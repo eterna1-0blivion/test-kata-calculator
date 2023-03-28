@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
     static boolean optional = true; // это для user-friendly интерфейса, но можно выключить
-    static boolean debug = false; // это для дебага (спамит в консоль, лучше не трогать)
+    static boolean debug = false; // это для дебага, можно включить
 
     public static void main(String[] args) {
 
@@ -23,21 +23,29 @@ public class Main {
 
         int resultArabic;
         String resultRoman;
+        char sign = expression.signCheck(input);
+        int[] values = expression.valueCheck(input);
+        boolean roman = expression.romanCheck(input);
 
-        switch (expression.signCheck(input)) { // непосредственный расчёт результата
-            case '+' -> resultArabic = (expression.valueCheck(input)[0] + expression.valueCheck(input)[1]);
-            case '-' -> resultArabic = (expression.valueCheck(input)[0] - expression.valueCheck(input)[1]);
-            case '*' -> resultArabic = (expression.valueCheck(input)[0] * expression.valueCheck(input)[1]);
-            case '/' -> resultArabic = (expression.valueCheck(input)[0] / expression.valueCheck(input)[1]);
+        switch (sign) { // непосредственный расчёт результата
+            case '+' -> resultArabic = (values[0] + values[1]);
+            case '-' -> resultArabic = (values[0] - values[1]);
+            case '*' -> resultArabic = (values[0] * values[1]);
+            case '/' -> resultArabic = (values[0] / values[1]);
             default -> throw new RuntimeException("Арифметическая операция не распознана");
         }
-        if (expression.romanCheck(input)){
+        if (roman){
             resultRoman = expression.reverseConversion(resultArabic);
             return resultRoman;
         } else {
             return String.valueOf(resultArabic);
         }
     }
+
+//    Это костыль, не смотри сюда. И не трогай. Кыш-кыш
+    static boolean signDebug = true;
+    static boolean valueDebug = true;
+    static boolean romanDebug = true;
 
     static class Operations {
 
@@ -54,7 +62,7 @@ public class Main {
             } else {
                 throw new RuntimeException("Арифметическая операция не распознана");
             }
-            if(debug) {System.out.println("Арифметический оператор: " + sign);}
+            if(debug && signDebug) {System.out.println("Арифметический оператор: " + sign); signDebug = false;}
             return sign;
         }
 
@@ -73,10 +81,10 @@ public class Main {
             }
 
             if (check1 && check2) { // + проверка смешивания римских и арабских цифр
-                if(debug) System.out.println("Римские цифры: Да");
+                if(debug && romanDebug) System.out.println("Римские цифры: Да"); romanDebug = false;
                 return true;
             } else if (check1 == check2){
-                if(debug) System.out.println("Римские цифры: Нет");
+                if(debug && romanDebug) System.out.println("Римские цифры: Нет"); romanDebug = false;
                 return false;
             } else {
                 throw new RuntimeException("Неверный формат написания римских цифр");
@@ -124,7 +132,7 @@ public class Main {
                 throw new RuntimeException("Входное значение не может быть больше 10 или меньше 1");
             } else {
                 try {
-                    if(debug) { System.out.println("Обнаруженные операнды: " + intValues[0] + " и " + intValues[1]);}
+                    if(debug && valueDebug) { System.out.println("Обнаруженные операнды: " + intValues[0] + " и " + intValues[1]); valueDebug = false;}
                     return new int[]{intValues[0],intValues[1]};
                 } catch (NumberFormatException e) {
                     throw new RuntimeException("Неверный формат арифметического выражения");
