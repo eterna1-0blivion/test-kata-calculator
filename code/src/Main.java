@@ -9,9 +9,9 @@ import java.util.stream.Collectors;
 public class Main {
     static boolean optional = true; // это для user-friendly интерфейса, но можно выключить
     static boolean debug = false; // это для дебага, можно включить. Ниже настройки:
-    static boolean signDebug = true; // показывает найденную арифметическую операцию (только при debug = true)
-    static boolean valueDebug = true; // показывает найденные введённые значения (только при debug = true)
-    static boolean romanDebug = true; // показывает, найдены ли римские символы во введённом выражении (только при debug = true)
+    static boolean signDebug = true; // показывает найденную арифметическую операцию (if debug = true)
+    static boolean valueDebug = true; // показывает найденные введённые значения (if debug = true)
+    static boolean romanDebug = true; // показывает, найдены ли римские символы во введённом выражении (if debug = true)
 
     public static void main(String[] args) {
 
@@ -163,7 +163,8 @@ public class Main {
         String arabicToRoman(int input) { // преобразование из арабских в римские с помощью Enum (он внизу)
 
             if (input < 1 || input > 3999) {
-                throw new RuntimeException("Римские числа не могут принимать значения меньше 1 (I) и больше 3999 (MMMCMXCIX)");
+                throw new RuntimeException("Римские числа не могут принимать значения меньше 1 (I) " +
+                                                   "и больше 3999 (MMMCMXCIX)");
             }
 
             List<RomanNumeral> romanNumerals = RomanNumeral.getReverseSortedValues();
